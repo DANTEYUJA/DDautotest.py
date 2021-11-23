@@ -24,7 +24,7 @@ class UI_0101:
 
 用来声明每个测试步骤，这样日志报告更清晰
 
-INFO 库函数
+INFO 库函数  INFO(menuText)
 
 用来打印一些信息在日志和报告中，方便出现问题时定位。
 
@@ -132,10 +132,23 @@ hytest 执行用例时
 如果 teststeps 执行失败， 仍然会执行 teardown ， 确保环境被 清除
 
 9.滚动页面的方法：
-window.scrollBy(0,500)　　   向下滚动500个像素
+wd.execute_script("window.scrollBy(0,800)")    向下滑动800个像素
 
 window.scrollBy(0,-500)　　 向上滚动500个像素
 
 window.scrollBy(500,0)　　   向右滚动500个像素
 
 window.scrollBy(-500,0)　　 向左滚动500个像素
+
+10.断言
+        try:
+            assert u"CMTC"in wd.title
+            print("CMTC页面打开成功")
+        except:
+            print("CMTC页面打开失败")
+
+11. # 显示等待10秒，直到页面右边的"相关术语"出现
+WebDriverWait(wd, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR,
+"body > div.el-picker-panel.el-date-range-picker.el-popper > div.el-picker-panel__body-wrapper > div")))
+
+12.print(len(wd))
