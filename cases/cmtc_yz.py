@@ -10,13 +10,10 @@ from hytest import STEP, INFO
 from lib.cmtclg_djj01 import cmtc_login
 
 
-# 初始化方法套件setup登录，无需self参数
+# 初始化方法套件setup登录，无需self参数(djj01)
 # wd调用lib/cmtclogin中cmtc_login
 def suite_setup():
-    INFO('初始化登录流程')
     cmtc_login()
-
-
 # 套件清除方法    如果底下class用例有多个且之间具有数据依赖性，需要在顶部加套件初始化
 # 防止获取不到数据元素
 def suite_teardown():
@@ -24,8 +21,8 @@ def suite_teardown():
     wd.quit()
 
 
-class cmtc_yzsq():
-    name = '印章'
+class cmtc_yz01():
+    name = '印章申请'
     tags = ['印章']
 
     # 测试用例开始执行
@@ -41,8 +38,31 @@ class cmtc_yzsq():
         yzgl.click()
         yzcx = wd.find_element_by_css_selector('div#app div:nth-child(1) > a > li')
         yzcx.click()
-        # 新增按钮
+        sleep(2)
+        # 分页50/页
+        wd.find_element_by_css_selector('div#app span.el-pagination__sizes > div > div > input').click()
+        sleep(2)
+        wd.find_element_by_xpath('/html/body/div[2]/div[1]/div[1]/ul/li[4]/span').click()
+        sleep(1)
+        # 查询自动化印章
+        wd.find_element_by_xpath(
+            '/html/body/div[1]/div/div[2]/section/div[2]/form/div[1]/div/div/input').send_keys('自动化印章')
+        wd.find_element_by_xpath(
+            '/html/body/div[1]/div/div[2]/section/div[2]/form/div[4]/div/button[1]/span').click()
+        sleep(2)
+        # 获取当前页面的源码并断言
+        pagesource = wd.page_source
+        # print("数据类型为:")
+        # print(type(pagesource))
+        # 好像获取到的源码就是gbk格式，不需要下面转成gbk格式，因此注释掉了下面那句
+        # print(pagesource.encode("gbk",ignore))
+        # 获取某些关键字在源码中的数量
+        # 等待时间获取最全页面源码
         wd.implicitly_wait(10)
+        INFO("新增印章前页面关键字数量为:%d" % +pagesource.count("自动化印章"))
+
+        # 新增印章申请按钮
+        wd.implicitly_wait(20)
         sleep(2)
         xz = wd.find_element_by_css_selector(
             'div#app div.mb8.el-row > div:nth-child(1) > button[type="button"]')
@@ -50,7 +70,7 @@ class cmtc_yzsq():
         wd.implicitly_wait(10)
         # 印章名称
         wd.find_element_by_xpath(
-            '/html/body/div[1]/div/div[2]/section/div[2]/form[2]/div[1]/div/div[1]/input').send_keys('DDauto印章名称11')
+            '/html/body/div[1]/div/div[2]/section/div[2]/form[2]/div[1]/div/div[1]/input').send_keys('自动化印章10')
         wd.find_element_by_xpath(
             '/html/body/div[1]/div/div[2]/section/div[2]/form[2]/div[2]/div/div[1]/input').send_keys('2021-12-25')
         wd.find_element_by_xpath(
@@ -69,15 +89,15 @@ class cmtc_yzsq():
         wd.find_element_by_css_selector(
             'div#app div.el-upload.el-upload--picture > button[type="button"] > span').click()
         sleep(2)
-        pyautogui.write(r'C:\cover.png')
+        pyautogui.write(r'C:\cover.jpg')
         pyautogui.press('enter', 2)
         # 上传文件时等待时间
         sleep(5)
         pic = wd.find_element_by_css_selector(
             'div#app li > a')
-        INFO(pic.text)
+        INFO('印章图片为:' + pic.text)
         try:
-            assert u"cover.png" in pic.text
+            assert u"cover.jpg" in pic.text
             INFO("印章图片上传成功")
         except:
             INFO("印章图片上传失败")
@@ -86,36 +106,48 @@ class cmtc_yzsq():
         wd.execute_script("window.scrollBy(0,500)")
         sleep(1)
         wd.find_element_by_xpath(
-            '/html/body/div[1]/div/div[2]/section/div[2]/form[2]/div[7]/div/div/textarea').send_keys('DDautoremark1')
+            '/html/body/div[1]/div/div[2]/section/div[2]/form[2]/div[7]/div/div/textarea').send_keys('自动化印章remark1')
         wd.find_element_by_css_selector(
             'div#app button[type="button"].el-button.el-button--primary.el-button--medium').click()
         INFO('印章新增成功')
         sleep(5)
-        STEP(2,'印章查询')
-        # 查询DDauto
+        STEP(2, '印章查询')
+        # 分页50/页
+        wd.find_element_by_css_selector('div#app span.el-pagination__sizes > div > div > input').click()
+        sleep(2)
+        wd.find_element_by_xpath('/html/body/div[2]/div[1]/div[1]/ul/li[4]/span').click()
+        sleep(2)
+        # 查询自动化印章
         wd.find_element_by_xpath(
-            '/html/body/div[1]/div/div[2]/section/div[2]/form/div[1]/div/div/input').send_keys('DDauto')
+            '/html/body/div[1]/div/div[2]/section/div[2]/form/div[1]/div/div/input').send_keys('自动化印章')
         wd.find_element_by_xpath(
             '/html/body/div[1]/div/div[2]/section/div[2]/form/div[4]/div/button[1]/span').click()
+        sleep(5)
+
+        # 查询印章页面截屏，会自动加入测试报告中
+        # 第1个参数是 webdriver 对象
+        # width 参数为可选参数， 指定图片显示宽度
+        SELENIUM_LOG_SCREEN(wd, width='50%')
+
         sleep(2)
         # 获取当前页面的源码并断言
         pagesource = wd.page_source
         # print("数据类型为:")
+
         # print(type(pagesource))
         # 好像获取到的源码就是gbk格式，不需要下面转成gbk格式，因此注释掉了下面那句
         # print(pagesource.encode("gbk",ignore))
         # 获取某些关键字在源码中的数量
-        wd.implicitly_wait(10)
+        wd.implicitly_wait(20)
         # 设置等待时间获取最全页面源码
-        sleep(8)
-        INFO("页面关键字数量为:%d" % +pagesource.count("DDauto"))
+        sleep(5)
+        INFO("新增印章前页面关键字数量为:%d" % +pagesource.count("自动化印章"))
 
         try:
 
-            assert u"DDauto" in pagesource, "页面源码中存在'DDauto'关键字"
+            assert u"自动化印章" in pagesource, "页面源码中存在'自动化印章'关键字"
 
         except:
 
-            INFO("页面源码中不存在DDauto关键字", "\n")
+            INFO("页面源码中不存在自动化印章关键字", "\n")
 
-        sleep(2)

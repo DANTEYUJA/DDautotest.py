@@ -21,15 +21,14 @@ def cmtc_login():
     # 打开CMTC平台
     wd.get('http://192.168.30.76:8081')
     wd.implicitly_wait(10)
-
-    #账号全选退格删除
-    wd.find_element_by_xpath("/html/body/div/div/form/div[1]/div/div[1]/input").send_keys(Keys.CONTROL,'a')
+    # 账号全选退格删除
+    wd.find_element_by_xpath("/html/body/div/div/form/div[1]/div/div[1]/input").send_keys(Keys.CONTROL, 'a')
     sleep(1)
     wd.find_element_by_xpath("/html/body/div/div/form/div[1]/div/div[1]/input").send_keys(Keys.BACKSPACE)
     sleep(1)
-    wd.find_element_by_xpath("/html/body/div/div/form/div[1]/div/div[1]/input").send_keys('dingbiao')
-    #密码全选退格删除
-    wd.find_element_by_xpath("/html/body/div/div/form/div[2]/div/div/input").send_keys(Keys.CONTROL,'a')
+    wd.find_element_by_xpath("/html/body/div/div/form/div[1]/div/div[1]/input").send_keys('djj01')
+    # 密码全选退格删除
+    wd.find_element_by_xpath("/html/body/div/div/form/div[2]/div/div/input").send_keys(Keys.CONTROL, 'a')
     sleep(1)
     wd.find_element_by_xpath("/html/body/div/div/form/div[2]/div/div/input").send_keys(Keys.BACKSPACE)
     sleep(1)
@@ -38,5 +37,8 @@ def cmtc_login():
     # 登录
     wd.find_element(By.CSS_SELECTOR, ".el-button > span > span").click()
     wd.implicitly_wait(10)
+    # 通过回车键替代点击操作
+    # wd.find_element_by_id("su").send_keys(Keys.ENTER)
     # 以下代码表示将上方变量wd存入GSTORE对象中方便调用 存入是GSTORE在前
     GSTORE['wd'] = wd
+

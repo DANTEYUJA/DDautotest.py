@@ -27,7 +27,7 @@ def cmtc_login():
     sleep(1)
     wd.find_element_by_xpath("/html/body/div/div/form/div[1]/div/div[1]/input").send_keys(Keys.BACKSPACE)
     sleep(1)
-    wd.find_element_by_xpath("/html/body/div/div/form/div[1]/div/div[1]/input").send_keys('dingbiao')
+    wd.find_element_by_xpath("/html/body/div/div/form/div[1]/div/div[1]/input").send_keys('qixia')
     #密码全选退格删除
     wd.find_element_by_xpath("/html/body/div/div/form/div[2]/div/div/input").send_keys(Keys.CONTROL,'a')
     sleep(1)
