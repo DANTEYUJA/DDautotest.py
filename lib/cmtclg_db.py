@@ -12,7 +12,7 @@ from selenium.webdriver.common.keys import Keys
 
 
 def cmtc_login():
-    INFO('初始化登录')
+    INFO('初始化登录:dingbiao')
     # 创建浏览器对象wd/调用驱动打开chrome
     wd = webdriver.Chrome(r'c:\webdrivers\chromedriver.exe')
     # 浏览器最大化

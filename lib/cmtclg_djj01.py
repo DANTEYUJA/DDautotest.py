@@ -12,7 +12,7 @@ from selenium.webdriver.common.keys import Keys
 
 
 def cmtc_login():
-    INFO('初始化登录')
+    INFO('初始化登录:djj01')
     # 创建浏览器对象wd/调用驱动打开chrome
     wd = webdriver.Chrome(r'c:\webdrivers\chromedriver.exe')
     # 浏览器最大化
@@ -41,4 +41,3 @@ def cmtc_login():
     # wd.find_element_by_id("su").send_keys(Keys.ENTER)
     # 以下代码表示将上方变量wd存入GSTORE对象中方便调用 存入是GSTORE在前
     GSTORE['wd'] = wd
-
