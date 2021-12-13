@@ -1,6 +1,5 @@
 python项目必须包含cases套件，python包内容必须包含class用例类，参数化必须包含初始化setup与teardown方法，需要在
 teststeps测试步骤前用来初始化’登录‘这个操作，class用例下必须包含teststeps测试方法
-整体框架为：class>setup>teardown>teststeps>step>info>check_point
 
 lib库存放登录代码
 cases文件夹下存放用例文件，按照1-10顺序执行
